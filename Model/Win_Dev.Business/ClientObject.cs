@@ -12,28 +12,41 @@ namespace Win_Dev.Business
     {
         private const string APP_PATH = "https://localhost:44399";
         private static string token;
+        private ApplicationState state;
 
         public ClientObject()
         {
-
+            state = new ApplicationState();
         }
 
         public ApplicationState Initialise()
         {
-            ApplicationState state = new ApplicationState();
-
-            using (var client = new HttpClient())
+            try
             {
-                var responce = client.GetAsync(APP_PATH + "/api/State").Result;
-                var text = responce.Content.ReadAsStringAsync().Result;
-                if (text == "true")
+                if (CheckServerState() == "true")
                 {
                     state.IsServerFound = true;
                     return state;
                 }
-            }
 
-            return state;
+                state.IsServerFound = false;
+                return state;
+
+            }
+            catch (Exception ex)
+            {
+                state.IsServerFound = false;
+                return state;
+            }
+        }
+
+        public string CheckServerState()
+        {
+            using (var client = new HttpClient())
+            {
+                var responce = client.GetAsync(APP_PATH + "/api/State").Result;
+                return responce.Content.ReadAsStringAsync().Result;
+            }
         }
 
 
