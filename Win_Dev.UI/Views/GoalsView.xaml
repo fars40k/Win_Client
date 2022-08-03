@@ -1,0 +1,278 @@
+﻿<UserControl x:Class="Win_Dev.UI.Views.GoalsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:local="clr-namespace:Win_Dev.UI.Views"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
+             xmlns:uc="clr-namespace:Win_Dev.Assets.UserControls;assembly=Win_Dev.Assets"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="800" Height="Auto" Width="Auto">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Win_Dev.Assets;component/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <StackPanel>
+
+        <ListView x:Name="GoalList" 
+                  Height="200"  
+                  DockPanel.Dock="Top" 
+                  Margin="4"
+                  ItemsSource="{Binding Goals, Mode=TwoWay}">
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Percentage}" Header="{StaticResource Percentage}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="{StaticResource Goal}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=CreationDateShort}" Header="{StaticResource Creation_date}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ExpireDateShort}" Header="{StaticResource Expire_date}"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=PersonelOnGoal}" Header="{StaticResource Goal_crew}"/>
+                </GridView>
+            </ListView.View>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <cmd:EventToCommand Command="{Binding SelectionChangedCommand}"
+                                                CommandParameter="{Binding SelectedItem, ElementName=GoalList}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+        </ListView>
+
+        <StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="2">
+
+                <Button x:Name="CreatePerson"
+                        Style="{StaticResource ButtonCreateGoal}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="Auto"
+                        Height="22"
+                        BorderThickness="0"
+                        DockPanel.Dock="Left">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cmd:EventToCommand Command="{Binding CreateGoalCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </Button>
+
+                <Button x:Name="DeletePerson"
+                        Style="{StaticResource ButtonDeleteGoal}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Width="Auto"
+                        Height="22"
+                        Margin="5,0,0,0"
+                        BorderThickness="0"
+                        DockPanel.Dock="Left">
+
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <cmd:EventToCommand Command="{Binding DeleteGoalCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+
+                </Button>
+
+            </StackPanel>
+
+            <TabControl Margin="2">
+
+                <TabItem Header="{StaticResource Edit_goal}" 
+                         FontSize="16" 
+                         Background="AntiqueWhite">
+
+                    <StackPanel>
+
+                        <TextBlock x:Name="ID" 
+                       Height="20" 
+                       TextWrapping="Wrap" 
+                       Text="{Binding GoalID}" 
+                       VerticalAlignment="Top" 
+                       FontFamily="Rockwell" 
+                       FontSize="12"
+                       Foreground="OrangeRed"
+                       IsEnabled="False"/>
+
+
+                        <uc:LimitedTextBox x:Name="LimitedTextBox1"
+                               Title="{StaticResource Goal}"
+                               LimitedText="{Binding GoalName, Mode=TwoWay}"
+                               MaxLength="50" 
+                               Height="60"/>
+
+                        <uc:LimitedTextBox x:Name="LimitedTextBox2"                                          
+                               Title="{StaticResource Description}"
+                               LimitedText="{Binding Description, Mode=TwoWay}"
+                               MaxLength="4000" 
+                               Height="100"/>
+
+                        <StackPanel VerticalAlignment="Center" 
+                        Orientation="Horizontal" 
+                        Margin="5">
+
+                            <TextBlock Text="{StaticResource Percentage}"/>
+
+                            <TextBox Text="{Binding ElementName=slValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"                                     
+                         TextAlignment="Right"
+                         Width="40" 
+                         BorderThickness="0" 
+                         Margin="20,0,20,0"/>
+
+                            <Slider Maximum="100" 
+                        TickPlacement="BottomRight"
+                        TickFrequency="10" 
+                        IsSnapToTickEnabled="True" 
+                        Name="slValue" 
+                        Width="400" 
+                        Foreground="OrangeRed" 
+                        Margin="20,0,20,0"
+                        Value="{Binding Percentage}"/>
+
+                            <ComboBox x:Name="StatusComboBox" 
+                          HorizontalAlignment="Right" 
+                          MinWidth="120"
+                          SelectedIndex="{Binding SelectedCondition}"
+                          ItemsSource="{Binding Conditions}"
+                          SelectedItem="0"/>
+
+                        </StackPanel>
+
+                        <StackPanel VerticalAlignment="Center" 
+                        Orientation="Horizontal">
+
+                            <TextBlock Text="{StaticResource Creation_date}" 
+                           Margin="4"/>
+
+                            <DatePicker Name="CreationDate"
+                            IsDropDownOpen="False" 
+                            SelectedDateFormat="Short"
+                            SelectedDate="{Binding CreationDate, Mode=TwoWay }">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedDateChanged">
+                                        <cmd:EventToCommand Command="{Binding DateChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                            </DatePicker>
+
+                            <TextBlock Text="{StaticResource Expire_date}" 
+                           Margin="4"/>
+
+                            <DatePicker Name="ExpireDate"
+                            IsDropDownOpen="False" 
+                            SelectedDateFormat="Short" 
+                            SelectedDate="{Binding ExpireDate, Mode=TwoWay }">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedDateChanged">
+                                        <cmd:EventToCommand Command="{Binding DateChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                            </DatePicker>
+
+                        </StackPanel>
+
+                        <TextBlock Text="{Binding ConstructedCommentary}"
+                       FontSize="14"/>
+
+                    </StackPanel>
+
+                </TabItem>
+
+                <TabItem Header="{StaticResource Goal_crew}" 
+                         FontSize="16" 
+                         Background="AntiqueWhite">
+
+                    <StackPanel Orientation="Horizontal" Margin="4">
+
+                        <StackPanel>
+
+                            <TextBlock Text="{StaticResource Goal_crew}" 
+                               TextAlignment="Center"
+                               Foreground="OrangeRed"/>
+
+                            <ListBox x:Name="GoalAssigned" 
+                             Width="Auto"
+                             MinWidth="300"
+                             Height="200"
+                             Margin="4"
+                             SelectedIndex="{Binding Path=SelectedPersonGoal, Mode=TwoWay}"
+                             ItemsSource="{Binding GoalAssigned, Mode=TwoWay}"/>
+
+                        </StackPanel>
+
+                        <StackPanel VerticalAlignment="Center">
+
+                            <Button Style="{StaticResource Button}" 
+                            Content="⇛" 
+                            Width="50" 
+                            Margin="3">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cmd:EventToCommand Command="{Binding UnassignFromGoalCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                            </Button>
+
+                            <Button Style="{StaticResource Button}" 
+                            Content="⇚" 
+                            Width="50">
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <cmd:EventToCommand Command="{Binding AssignToGoalCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                            </Button>
+
+                        </StackPanel>
+
+                        <StackPanel>
+
+                            <TextBlock Text="{StaticResource Project_crew}"
+                               TextAlignment="Center"
+                               Foreground="OrangeRed"/>
+
+                            <ListBox x:Name="ProjectAssigned" 
+                             Width="Auto" 
+                             MinWidth="300"
+                             Height="200"                                       
+                             Margin="4"
+                             SelectedIndex="{Binding Path=SelectedPersonProject, Mode=TwoWay}"
+                             ItemsSource="{Binding ProjectAssigned, Mode=TwoWay}"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </TabItem>
+
+            </TabControl>
+
+        </StackPanel>
+        
+    </StackPanel>
+    
+</UserControl>
