@@ -8,6 +8,15 @@
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"   
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Win_Dev.Assets;component/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid>
         <DockPanel>
 
@@ -54,7 +63,7 @@
                      IsReadOnly="False"/>
 
             <Button x:Name="SignIn_BT"
-                            
+                            Style="{StaticResource ButtonSignIn}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             Width="Auto"

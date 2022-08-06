@@ -102,14 +102,14 @@
     <Compile Include="RegistryWorker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Win_Dev.Data\Win_Dev.Data.csproj">
       <Project>{aedc2581-b0f0-49c5-a03c-5bf9b69a7ce7}</Project>
       <Name>Win_Dev.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

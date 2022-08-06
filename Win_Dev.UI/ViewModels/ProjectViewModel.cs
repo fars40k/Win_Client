@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using Win_Dev.Business;
-using Win_Dev.Data;
 using Win_Dev.UI.Views;
 
 namespace Win_Dev.UI.ViewModels

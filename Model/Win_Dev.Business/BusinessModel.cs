@@ -64,7 +64,7 @@ namespace Win_Dev.Business
 
         public void GetProjectsList(Action<List<BusinessProject>, Exception> callback)
         {
-            List<BusinessProject> businessProjects = new List<BusinessProject>();
+           /* List<BusinessProject> businessProjects = new List<BusinessProject>();
 
             Exception error = null;
 
@@ -86,7 +86,7 @@ namespace Win_Dev.Business
                 error = ex;
             }
 
-            callback.Invoke(businessProjects, error);
+            callback.Invoke(businessProjects, error);*/
         }
 
         public void UpdateProject(BusinessProject projectFromUI,Action<Exception> callback)
@@ -197,7 +197,7 @@ namespace Win_Dev.Business
 
         public void GetPersonelList(Action<List<BusinessPerson>, Exception> callback)
         {
-            Exception error = null;
+            /*Exception error = null;
 
             List<BusinessPerson> businessPersonel = new List<BusinessPerson>();
 
@@ -223,7 +223,7 @@ namespace Win_Dev.Business
                 error = ex;
             }
 
-            callback.Invoke(businessPersonel, error);
+            callback.Invoke(businessPersonel, error);*/
         }
 
         public void UpdatePersonel(IEnumerable<BusinessPerson> UIList, Action<Exception> callback)

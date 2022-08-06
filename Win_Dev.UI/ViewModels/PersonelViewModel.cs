@@ -8,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
 using Win_Dev.Business;
-using Win_Dev.Data;
 
 namespace Win_Dev.UI.ViewModels
 {
@@ -44,7 +43,7 @@ namespace Win_Dev.UI.ViewModels
 
         private int _employeesOldHashCode;
 
-        public PersonelViewModel(DatabaseWorker dataAccessObject)
+        public PersonelViewModel()
         {
             _employees = new ObservableCollection<BusinessPerson>();
 

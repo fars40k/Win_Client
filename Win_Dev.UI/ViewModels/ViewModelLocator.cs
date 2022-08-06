@@ -2,7 +2,7 @@
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using Win_Dev.Business;
-using Win_Dev.Data;
+using Ninject;
 
 namespace Win_Dev.UI.ViewModels
 {
@@ -18,11 +18,14 @@ namespace Win_Dev.UI.ViewModels
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
+                
                 SimpleIoc.Default.Register<ClientObject>();
+                
             }
             else
             {
                 SimpleIoc.Default.Register<ClientObject>();
+               
             }
 
             SimpleIoc.Default.Register<BusinessModel>();

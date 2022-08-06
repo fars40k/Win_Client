@@ -4,7 +4,6 @@ using GalaSoft.MvvmLight.Ioc;
 using Win_Dev.Business;
 using System.Windows;
 using System.Linq;
-using Win_Dev.Data;
 using System.Windows.Media;
 using System.Windows.Controls;
 using Win_Dev.UI.Views;
@@ -19,7 +18,7 @@ namespace Win_Dev.UI.ViewModels
 
     public class MainViewModel : ViewModelBase
     {
-        private ClientObject _clientObject;
+        private ClientObject _clientObject; 
 
         private RegistryWorker _registryWorker;
         private ApplicationCultures _applicationCultures;
@@ -157,8 +156,10 @@ namespace Win_Dev.UI.ViewModels
             }
             else
             {
+                UserHelpString = String.Empty;
+
                 TabControlArea = new LoginView();
-                
+
             }
         }       
 

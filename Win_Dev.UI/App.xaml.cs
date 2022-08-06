@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Threading;
 using Win_Dev.UI.ViewModels;
 using Win_Dev.Business;
-using Win_Dev.Data;
 using Win_Dev.UI.Views;
 
 namespace Win_Dev.UI

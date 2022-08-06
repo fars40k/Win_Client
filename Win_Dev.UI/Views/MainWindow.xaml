@@ -38,7 +38,7 @@
         <ContentControl x:Name="ContentPage" 
                         Grid.Row="1" 
                         Grid.RowSpan="2" 
-                        Content=""/>
+                        Content="{Binding TabControlArea}"/>
 
         <Button x:Name="LogOut_BT"
                             Style="{StaticResource ButtonLogOut}"
