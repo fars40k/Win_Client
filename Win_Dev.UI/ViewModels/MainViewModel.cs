@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Command;
 
 namespace Win_Dev.UI.ViewModels
 {
@@ -24,28 +25,6 @@ namespace Win_Dev.UI.ViewModels
         private ApplicationCultures _applicationCultures;
 
         public ObservableCollection<string> CulturesCB { get; set; }
-
-        private string _login;
-        public string Login
-        {
-            get { return _login; }
-            set
-            {
-                _login = value;
-                RaisePropertyChanged("Login");
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-                RaisePropertyChanged("Password");
-            }
-        }
 
         #region BindedProperties
 
@@ -125,17 +104,21 @@ namespace Win_Dev.UI.ViewModels
 
         #endregion
 
+        public RelayCommand LogOutCommand { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
+            LogOutCommand = new RelayCommand(() =>
+            {
+                _clientObject.LogOut();
+            });
 
             MessengerInstance.Register<NotificationMessage<string>>(this, BeingNotifed);
 
             UIInit();
-
-            EventsSubscription();
 
         }
 
@@ -164,13 +147,19 @@ namespace Win_Dev.UI.ViewModels
             ConnectionStatusColour = new SolidColorBrush(Colors.OrangeRed);
             UserHelpString = (string)Application.Current.Resources["Database_Wait"] ?? "missing";
 
-        }
-
-        private void EventsSubscription()
-        {
-
             ApplicationState state = _clientObject.Initialise();
-            
+
+            if (state.IsServerFound == false)
+            {
+
+                UserHelpString = (string)Application.Current.Resources["Database_Fail"] ?? "missing";
+
+            }
+            else
+            {
+                TabControlArea = new LoginView();
+                
+            }
         }       
 
 

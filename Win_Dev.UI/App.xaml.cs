@@ -33,7 +33,6 @@ namespace Win_Dev.UI
         {
             SimpleIoc.Default.Register<RegistryWorker>();
             SimpleIoc.Default.Register<ApplicationCultures>();
-            SimpleIoc.Default.Register<ClientObject>();
 
             applicationCultures = SimpleIoc.Default.GetInstance<ApplicationCultures>();
             registryWorker = SimpleIoc.Default.GetInstance<RegistryWorker>();

@@ -17,16 +17,12 @@ namespace Win_Dev.UI.ViewModels
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             if (ViewModelBase.IsInDesignModeStatic)
-            {  
-
-                SimpleIoc.Default.Register<DataAccessObject>();
-                SimpleIoc.Default.Register<DatabaseWorker>();
+            {
+                SimpleIoc.Default.Register<ClientObject>();
             }
             else
             {
-
-                SimpleIoc.Default.Register<DataAccessObject>();
-                SimpleIoc.Default.Register<DatabaseWorker>();
+                SimpleIoc.Default.Register<ClientObject>();
             }
 
             SimpleIoc.Default.Register<BusinessModel>();
@@ -38,12 +34,8 @@ namespace Win_Dev.UI.ViewModels
 
             // Setting dependencies
 
-            DataAccessObject dataAccessObject = ServiceLocator.Current.GetInstance<DataAccessObject>();
-            DatabaseWorker databaseWorker = ServiceLocator.Current.GetInstance<DatabaseWorker>();
             BusinessModel businessModel = ServiceLocator.Current.GetInstance<BusinessModel>();
 
-            databaseWorker.DatabaseWorkerInit(dataAccessObject);
-            businessModel.BusinessModelInit(databaseWorker);
         }
 
         /// <summary>

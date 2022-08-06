@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace Win_Dev.Business
 {
-    public class ClientObject
+    public class ClientObject : INetworkClient
     {
-        private const string APP_PATH = "https://localhost:44399";
-        private static string token;
-        private ApplicationState state;
+        private const string _serverPath = "https://localhost:44399";
+        private static string _token;
+        public ApplicationState state { get; private set; }
 
         public ClientObject()
         {
@@ -40,30 +40,49 @@ namespace Win_Dev.Business
             }
         }
 
-        public string CheckServerState()
+        private string CheckServerState()
         {
             using (var client = new HttpClient())
             {
-                var responce = client.GetAsync(APP_PATH + "/api/State").Result;
+                var responce = client.GetAsync(_serverPath + "/api/State").Result;
                 return responce.Content.ReadAsStringAsync().Result;
             }
         }
 
 
-        public string Register(string email, string password)
+        public ApplicationState LogIn(string login, string password)
         {
-            var registerModel = new
+            try
             {
-                Email = email,
-                Password = password,
-                ConfirmPassword = password
-            };
-            using (var client = new HttpClient())
-            {
-                var response = client.PostAsJsonAsync(APP_PATH + "/api/Account/Register", registerModel).Result;
-                return response.StatusCode.ToString();
+                var registerModel = new
+                {
+                    Login = login,
+                    Password = password,
+                    ConfirmPassword = password
+                };
+                using (var client = new HttpClient())
+                {
+                    var response = client.PostAsJsonAsync(_serverPath + "/api/Account/Register", registerModel).Result;                  
+                }
+
+                state.DoesUserLoggedIn = true;
+                return state;
             }
+            catch 
+            {
+                state.DoesUserLoggedIn = false;
+                return state;
+            }
+            
         }
+
+        public ApplicationState LogOut()
+        {
+            state.DoesUserLoggedIn = false;
+            return state;
+        }
+
+
         // получение токена
         public Dictionary<string, string> GetTokenDictionary(string userName, string password)
         {
@@ -78,7 +97,7 @@ namespace Win_Dev.Business
             using (var client = new HttpClient())
             {
                 var response =
-                    client.PostAsync(APP_PATH + "/Token", content).Result;
+                    client.PostAsync(_serverPath + "/Token", content).Result;
                 var result = response.Content.ReadAsStringAsync().Result;
                 // Десериализация полученного JSON-объекта
                 Dictionary<string, string> tokenDictionary =
@@ -98,20 +117,11 @@ namespace Win_Dev.Business
             return client;
         }
 
-        public string GetUserInfo(string token)
-        {
-            using (var client = CreateClient(token))
-            {
-                var response = client.GetAsync(APP_PATH + "/api/Account/UserInfo").Result;
-                return response.Content.ReadAsStringAsync().Result;
-            }
-        }
-
         public string GetValues(string token)
         {
             using (var client = CreateClient(token))
             {
-                var response = client.GetAsync(APP_PATH + "/api/State").Result;
+                var response = client.GetAsync(_serverPath + "/api/State").Result;
                 return response.Content.ReadAsStringAsync().Result;
             }
         }
