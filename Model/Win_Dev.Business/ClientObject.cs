@@ -21,12 +21,11 @@ namespace Win_Dev.Business
             }
             private set
             {
-                _state = value;
-                if (applicationStateChanged != null) applicationStateChanged.Invoke(_state);
+                _state = value;          
             }
         }
 
-        public event Action<ApplicationState> applicationStateChanged;
+        public Action<ApplicationState> applicationStateChanged;
 
         public ClientObject()
         {
@@ -81,12 +80,14 @@ namespace Win_Dev.Business
                 state.DoesUserLoggedIn = false;
             }*/
             State.DoesUserLoggedIn = true;
+            if (applicationStateChanged != null) applicationStateChanged.Invoke(_state);
         }
 
         public void LogOut()
         {
             State.DoesUserLoggedIn = false;
-            
+            if (applicationStateChanged != null) applicationStateChanged.Invoke(_state);
+
         }
 
 

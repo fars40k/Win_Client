@@ -20,7 +20,7 @@ namespace Win_Dev.UI.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private IKernel _kernel;
-        private ClientObject _clientObject; 
+        private INetworkClient _client; 
         private RegistryWorker _registryWorker;
         private ApplicationCultures _applicationCultures;
 
@@ -109,17 +109,16 @@ namespace Win_Dev.UI.ViewModels
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(RegistryWorker registryWorker, ClientObject client, ApplicationCultures cultures, 
-                                IKernel kernel)
+        public MainViewModel(RegistryWorker registryWorker, ApplicationCultures cultures, IKernel kernel)
         {
             _kernel= kernel;
             _registryWorker = registryWorker;
-            _clientObject = client;
+            _client = ViewModelLocator.client;
             _applicationCultures = cultures;
 
             LogOutCommand = new RelayCommand(() =>
             {
-                _clientObject.LogOut();
+                _client.LogOut();
             });
 
             MessengerInstance.Register<NotificationMessage<string>>(this, BeingNotifed);
@@ -149,7 +148,8 @@ namespace Win_Dev.UI.ViewModels
             UserHelpString = (string)Application.Current.Resources["Database_Wait"] ?? "missing";
             DatabaseUpdating = Visibility.Hidden;
 
-            _clientObject.Initialise();
+            _client.Initialise();
+            ClientObject _clientObject = _client as ClientObject;
 
             if (_clientObject.State.IsServerFound == false)
             {
@@ -169,6 +169,10 @@ namespace Win_Dev.UI.ViewModels
 
         private void _clientObject_applicationStateChanged(ApplicationState obj)
         {
+            ClientObject _clientObject = _client as ClientObject;
+
+            UserHelpString = _clientObject.State.ToString();
+
             if (_clientObject.State.DoesUserLoggedIn == false)
             {
 

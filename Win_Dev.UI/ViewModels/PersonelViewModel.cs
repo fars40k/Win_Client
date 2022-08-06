@@ -13,7 +13,7 @@ namespace Win_Dev.UI.ViewModels
 {
     public class PersonelViewModel : ViewModelBase
     {
-        public BusinessModel Model = SimpleIoc.Default.GetInstance<BusinessModel>();
+        public BusinessModel Model;
 
         private ObservableCollection<BusinessPerson> _employees;
         public ObservableCollection<BusinessPerson> Employees
@@ -43,8 +43,10 @@ namespace Win_Dev.UI.ViewModels
 
         private int _employeesOldHashCode;
 
-        public PersonelViewModel()
+        public PersonelViewModel(BusinessModel model)
         {
+            Model = model;
+
             _employees = new ObservableCollection<BusinessPerson>();
 
             GetPersonelList();

@@ -16,7 +16,7 @@ namespace Win_Dev.UI.ViewModels
 {
     public class TableViewModel : ViewModelBase
     {
-        public BusinessModel Model = SimpleIoc.Default.GetInstance<BusinessModel>();
+        public BusinessModel Model;
 
         private TabItem _selectedTab;
         public TabItem SelectedTab
@@ -45,8 +45,9 @@ namespace Win_Dev.UI.ViewModels
             }
         }
 
-        public TableViewModel()
-        {     
+        public TableViewModel(BusinessModel model)
+        {
+            Model = model;
 
             ProjectCreateCommand = new RelayCommand(() => 
             {
