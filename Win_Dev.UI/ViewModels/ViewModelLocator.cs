@@ -12,7 +12,8 @@ namespace Win_Dev.UI.ViewModels
     /// </summary>    
     public class ViewModelLocator
     {
-        static StandardKernel kernel;
+        public static StandardKernel kernel;
+        public static INetworkClient client;
         static ViewModelLocator()
         {
             kernel = new StandardKernel();
@@ -21,6 +22,7 @@ namespace Win_Dev.UI.ViewModels
             {
 
                 kernel.Bind<INetworkClient>().To<ClientObject>().InSingletonScope();
+
             }
 
             else
@@ -35,7 +37,9 @@ namespace Win_Dev.UI.ViewModels
             kernel.Bind<TableViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<PersonelViewModel>().ToSelf().InSingletonScope();
             kernel.Bind<ProjectViewModel>().ToSelf().InSingletonScope();
+            kernel.Bind<LoginViewModel>().ToSelf().InSingletonScope();
 
+            client = kernel.Get<INetworkClient>();
         }
 
 

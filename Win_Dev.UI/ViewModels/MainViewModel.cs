@@ -124,7 +124,6 @@ namespace Win_Dev.UI.ViewModels
 
             MessengerInstance.Register<NotificationMessage<string>>(this, BeingNotifed);
 
-
             UIInit();
 
         }
@@ -148,24 +147,51 @@ namespace Win_Dev.UI.ViewModels
             DatabaseUpdating = Visibility.Visible;
             ConnectionStatusColour = new SolidColorBrush(Colors.OrangeRed);
             UserHelpString = (string)Application.Current.Resources["Database_Wait"] ?? "missing";
+            DatabaseUpdating = Visibility.Hidden;
 
-            ApplicationState state = _clientObject.Initialise();
+            _clientObject.Initialise();
 
-            if (state.IsServerFound == false)
+            if (_clientObject.State.IsServerFound == false)
             {
 
                 UserHelpString = (string)Application.Current.Resources["Database_Fail"] ?? "missing";
 
-            }
-            else
+            } else
             {
                 UserHelpString = String.Empty;
 
                 TabControlArea = _kernel.Get<LoginView>();
 
             }
-        }       
 
+            _clientObject.applicationStateChanged += _clientObject_applicationStateChanged;
+        }
 
+        private void _clientObject_applicationStateChanged(ApplicationState obj)
+        {
+            if (_clientObject.State.DoesUserLoggedIn == false)
+            {
+
+                if (TabControlArea is LoginView)
+                {                    
+
+                } else
+                {
+                    TabControlArea = _kernel.Get<LoginView>();
+                }
+
+            } else
+            {
+                if (TabControlArea is TableView)
+                {
+
+                }
+                else
+                {
+                    TabControlArea = _kernel.Get<TableView>();
+                }               
+
+            }
+        }
     }
 }

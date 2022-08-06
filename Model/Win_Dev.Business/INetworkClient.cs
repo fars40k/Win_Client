@@ -8,11 +8,11 @@ namespace Win_Dev.Business
 {
     public interface INetworkClient
     {
-        ApplicationState Initialise();
+        void Initialise();
 
-        ApplicationState LogIn(string login, string password);
+        void LogIn(string login, string password);
 
-        ApplicationState LogOut();
+        void LogOut();
 
 
         

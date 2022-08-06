@@ -12,31 +12,39 @@ namespace Win_Dev.Business
     {
         private const string _serverPath = "https://localhost:44399";
         private static string _token;
-        public ApplicationState state { get; private set; }
+
+        private ApplicationState _state;
+        public ApplicationState State 
+        { get
+            {
+                return _state;
+            }
+            private set
+            {
+                _state = value;
+                if (applicationStateChanged != null) applicationStateChanged.Invoke(_state);
+            }
+        }
+
+        public event Action<ApplicationState> applicationStateChanged;
 
         public ClientObject()
         {
-            state = new ApplicationState();
+            State = new ApplicationState();
         }
 
-        public ApplicationState Initialise()
+        public void Initialise()
         {
             try
             {
                 if (CheckServerState() == "true")
                 {
-                    state.IsServerFound = true;
-                    return state;
+                    State.IsServerFound = true;
                 }
-
-                state.IsServerFound = false;
-                return state;
-
             }
             catch (Exception ex)
             {
-                state.IsServerFound = false;
-                return state;
+                State.IsServerFound = false;
             }
         }
 
@@ -50,8 +58,9 @@ namespace Win_Dev.Business
         }
 
 
-        public ApplicationState LogIn(string login, string password)
+        public void LogIn(string login, string password)
         {
+            /*
             try
             {
                 var registerModel = new
@@ -66,20 +75,18 @@ namespace Win_Dev.Business
                 }
 
                 state.DoesUserLoggedIn = true;
-                return state;
             }
             catch 
             {
                 state.DoesUserLoggedIn = false;
-                return state;
-            }
-            
+            }*/
+            State.DoesUserLoggedIn = true;
         }
 
-        public ApplicationState LogOut()
+        public void LogOut()
         {
-            state.DoesUserLoggedIn = false;
-            return state;
+            State.DoesUserLoggedIn = false;
+            
         }
 
 

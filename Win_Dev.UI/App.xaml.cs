@@ -13,8 +13,10 @@ namespace Win_Dev.UI
     /// </summary>
     public partial class App : Application
     {
+        private static IKernel kernel;
         private RegistryWorker registryWorker;
         private ApplicationCultures applicationCultures;
+        private INetworkClient client;
 
         private static ViewModelLocator _viewModelLocator;
         public static ViewModelLocator ViewModelLocator
@@ -23,18 +25,20 @@ namespace Win_Dev.UI
         }
 
         static App()
-        {
+        {           
             DispatcherHelper.Initialize();
 
-            _viewModelLocator = new ViewModelLocator();          
+            _viewModelLocator = new ViewModelLocator();
+            kernel = ViewModelLocator.kernel;
         }
 
         protected void App_Startup(object sender, StartupEventArgs e)
-        {
-            var kernel = new StandardKernel();
+        { 
+            client = kernel.Get<INetworkClient>();
+
             kernel.Bind<RegistryWorker>().ToSelf().InSingletonScope();
             kernel.Bind<ApplicationCultures>().ToSelf().InSingletonScope();
-            kernel.Bind<MainWindow>().ToSelf().InSingletonScope();  
+            kernel.Bind<MainWindow>().ToSelf().InSingletonScope(); 
 
             applicationCultures = kernel.Get<ApplicationCultures>();
             registryWorker = kernel.Get<RegistryWorker>();

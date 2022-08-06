@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Win_Dev.UI.ViewModels
             set
             {
                 _login = value;
+                RaisePropertyChanged("Login");
             }
         }
 
@@ -30,17 +32,23 @@ namespace Win_Dev.UI.ViewModels
             set
             {
                 _password = value;
+                RaisePropertyChanged("Password");
             }
         }
 
         public RelayCommand SignInCommand { get; set; }
 
-        public LoginViewModel(INetworkClient client)
+        public LoginViewModel()
         {
-            ClientObject = client;
+            Login = "";
+            Password = "";
+           
+            ClientObject = ViewModelLocator.kernel.Get<INetworkClient>();
 
             SignInCommand = new RelayCommand(() =>
             {
+
+                ClientObject.LogIn(Login, Password);
 
             });
 
