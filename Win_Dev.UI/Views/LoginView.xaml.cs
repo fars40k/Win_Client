@@ -23,39 +23,8 @@ namespace Win_Dev.UI.Views
     /// </summary>
     public partial class LoginView : UserControl
     {
-        public INetworkClient NetworkClient { get; set; }
-
-        private string _login;
-        public string Login
-        {
-            get { return _login; }
-            set
-            {
-                _login = value;
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                _password = value;
-            }
-        }
-
-        public RelayCommand LogInCommand { get; set; }
-
-
         public LoginView()
         {
-
-            LogInCommand = new RelayCommand(() =>
-            {
-                
-            });
-
             InitializeComponent();
         }
     }

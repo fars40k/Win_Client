@@ -19,10 +19,10 @@ namespace Win_Dev.UI.ViewModels
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                
+
                 kernel.Bind<INetworkClient>().To<ClientObject>().InSingletonScope();
-            } 
-            
+            }
+
             else
             {
 
@@ -48,6 +48,14 @@ namespace Win_Dev.UI.ViewModels
             get
             {
                 return kernel.Get<MainViewModel>();
+            }
+        }
+
+        public LoginViewModel Login
+        {
+            get
+            {
+                return kernel.Get<LoginViewModel>();
             }
         }
 

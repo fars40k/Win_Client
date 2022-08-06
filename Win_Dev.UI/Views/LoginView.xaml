@@ -7,7 +7,8 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"   
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="500">
+             d:DesignHeight="200" d:DesignWidth="500"
+             DataContext="{Binding Login, Source={StaticResource Locator}}">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -74,7 +75,7 @@
                 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <cmd:EventToCommand Command="{Binding LogInCommand}"/>
+                        <cmd:EventToCommand Command="{Binding SignInCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>

@@ -91,6 +91,7 @@
     </ApplicationDefinition>
     <Compile Include="ApplicationCultures.cs" />
     <Compile Include="ViewModels\GoalsViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PersonelViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />

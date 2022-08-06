@@ -19,6 +19,7 @@ namespace Win_Dev.UI.ViewModels
 
     public class MainViewModel : ViewModelBase
     {
+        private IKernel _kernel;
         private ClientObject _clientObject; 
         private RegistryWorker _registryWorker;
         private ApplicationCultures _applicationCultures;
@@ -108,8 +109,10 @@ namespace Win_Dev.UI.ViewModels
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(RegistryWorker registryWorker, ClientObject client, ApplicationCultures cultures)
+        public MainViewModel(RegistryWorker registryWorker, ClientObject client, ApplicationCultures cultures, 
+                                IKernel kernel)
         {
+            _kernel= kernel;
             _registryWorker = registryWorker;
             _clientObject = client;
             _applicationCultures = cultures;
@@ -158,7 +161,7 @@ namespace Win_Dev.UI.ViewModels
             {
                 UserHelpString = String.Empty;
 
-                TabControlArea = new LoginView();
+                TabControlArea = _kernel.Get<LoginView>();
 
             }
         }       
