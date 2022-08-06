@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Threading;
 using Win_Dev.UI.ViewModels;
 using Win_Dev.Business;
 using Win_Dev.UI.Views;
+using Ninject;
 
 namespace Win_Dev.UI
 {
@@ -30,11 +31,13 @@ namespace Win_Dev.UI
 
         protected void App_Startup(object sender, StartupEventArgs e)
         {
-            SimpleIoc.Default.Register<RegistryWorker>();
-            SimpleIoc.Default.Register<ApplicationCultures>();
+            var kernel = new StandardKernel();
+            kernel.Bind<RegistryWorker>().ToSelf().InSingletonScope();
+            kernel.Bind<ApplicationCultures>().ToSelf().InSingletonScope();
+            kernel.Bind<MainWindow>().ToSelf().InSingletonScope();  
 
-            applicationCultures = SimpleIoc.Default.GetInstance<ApplicationCultures>();
-            registryWorker = SimpleIoc.Default.GetInstance<RegistryWorker>();
+            applicationCultures = kernel.Get<ApplicationCultures>();
+            registryWorker = kernel.Get<RegistryWorker>();
 
             // Setting application localisation
 
@@ -47,7 +50,7 @@ namespace Win_Dev.UI
 
             // Creating main window
 
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = kernel.Get<MainWindow>();
             mainWindow.DataContext = ViewModelLocator.Main;
             mainWindow.Resources.MergedDictionaries.Add(applicationCultures.LocalisationDictionary);
             mainWindow.MainWindowInit();

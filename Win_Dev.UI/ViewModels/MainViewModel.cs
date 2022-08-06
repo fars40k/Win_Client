@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Command;
+using Ninject;
 
 namespace Win_Dev.UI.ViewModels
 {
@@ -19,7 +20,6 @@ namespace Win_Dev.UI.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private ClientObject _clientObject; 
-
         private RegistryWorker _registryWorker;
         private ApplicationCultures _applicationCultures;
 
@@ -108,14 +108,19 @@ namespace Win_Dev.UI.ViewModels
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(RegistryWorker registryWorker, ClientObject client, ApplicationCultures cultures)
         {
+            _registryWorker = registryWorker;
+            _clientObject = client;
+            _applicationCultures = cultures;
+
             LogOutCommand = new RelayCommand(() =>
             {
                 _clientObject.LogOut();
             });
 
             MessengerInstance.Register<NotificationMessage<string>>(this, BeingNotifed);
+
 
             UIInit();
 
@@ -131,16 +136,11 @@ namespace Win_Dev.UI.ViewModels
 
         private void UIInit()
         {
-            _registryWorker = SimpleIoc.Default.GetInstance<RegistryWorker>();
-
             CulturesCB = new ObservableCollection<string>();
-            _applicationCultures = SimpleIoc.Default.GetInstance<ApplicationCultures>();
             _applicationCultures.Cultures.ToList().ForEach(CulturesCB.Add);
 
             _selectedCulture = _registryWorker.ReadLanguageRegistryEntry();
             SelectedCulture = _selectedCulture;
-
-            _clientObject = SimpleIoc.Default.GetInstance<ClientObject>();
 
             DatabaseUpdating = Visibility.Visible;
             ConnectionStatusColour = new SolidColorBrush(Colors.OrangeRed);

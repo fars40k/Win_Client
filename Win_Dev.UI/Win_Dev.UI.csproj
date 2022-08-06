@@ -90,7 +90,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationCultures.cs" />
-    <Compile Include="NinjectBindings.cs" />
     <Compile Include="ViewModels\GoalsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PersonelViewModel.cs" />

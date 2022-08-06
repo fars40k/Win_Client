@@ -12,34 +12,33 @@ namespace Win_Dev.UI.ViewModels
     /// </summary>    
     public class ViewModelLocator
     {
+        static StandardKernel kernel;
         static ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            kernel = new StandardKernel();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
                 
-                SimpleIoc.Default.Register<ClientObject>();
-                
-            }
+                kernel.Bind<INetworkClient>().To<ClientObject>().InSingletonScope();
+            } 
+            
             else
             {
-                SimpleIoc.Default.Register<ClientObject>();
-               
+
+                kernel.Bind<INetworkClient>().To<ClientObject>().InSingletonScope();
+
             }
 
-            SimpleIoc.Default.Register<BusinessModel>();
-
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<TableViewModel>();
-            SimpleIoc.Default.Register<PersonelViewModel>();
-            SimpleIoc.Default.Register<ProjectViewModel>();
-
-            // Setting dependencies
-
-            BusinessModel businessModel = ServiceLocator.Current.GetInstance<BusinessModel>();
+            kernel.Bind<BusinessModel>().ToSelf().InSingletonScope();
+            kernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
+            kernel.Bind<TableViewModel>().ToSelf().InSingletonScope();
+            kernel.Bind<PersonelViewModel>().ToSelf().InSingletonScope();
+            kernel.Bind<ProjectViewModel>().ToSelf().InSingletonScope();
 
         }
+
+
 
         /// <summary>
         /// Gets the Main property.
@@ -48,7 +47,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return kernel.Get<MainViewModel>();
             }
         }
 
@@ -56,7 +55,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<TableViewModel>();
+                return kernel.Get<TableViewModel>();
             }
         }
 
@@ -64,7 +63,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<PersonelViewModel>();
+                return kernel.Get<PersonelViewModel>();
             }
         }     
 
