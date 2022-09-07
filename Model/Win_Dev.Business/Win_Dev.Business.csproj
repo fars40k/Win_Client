@@ -91,13 +91,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationState.cs" />
     <Compile Include="BusinessModel.cs" />
     <Compile Include="BusinessObjects\BusinessGoal.cs" />
     <Compile Include="BusinessObjects\BusinessPerson.cs" />
     <Compile Include="BusinessObjects\BusinessProject.cs" />
-    <Compile Include="ClientObject.cs" />
-    <Compile Include="INetworkClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegistryWorker.cs" />
   </ItemGroup>

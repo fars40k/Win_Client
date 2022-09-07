@@ -178,6 +178,10 @@
       <Project>{fe7ae203-0157-412a-9e15-3a68c5c661a4}</Project>
       <Name>Win_Dev.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Model\Win_Dev.Data\Win_Dev.Data.csproj">
+      <Project>{aedc2581-b0f0-49c5-a03c-5bf9b69a7ce7}</Project>
+      <Name>Win_Dev.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UI\Win_Dev.Assets\Win_Dev.Assets.csproj">
       <Project>{a4d721d0-ea0c-4622-8a52-640e0d2d5c54}</Project>
       <Name>Win_Dev.Assets</Name>

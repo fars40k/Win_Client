@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +44,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -57,21 +61,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationState.cs" />
+    <Compile Include="Dao\GoalsRepository.cs" />
+    <Compile Include="Dao\ProjectsRepository.cs" />
+    <Compile Include="IDataAccessService.cs" />
+    <Compile Include="INetworkClient.cs" />
+    <Compile Include="NetworkClient.cs" />
     <Compile Include="Dao\LinkedDataWorker.cs" />
     <Compile Include="DataAccessObject.cs" />
-    <Compile Include="DatabaseWorker.cs" />
     <Compile Include="Dto\Goal.cs" />
-    <Compile Include="Dto\GoalsToProjects.cs" />
     <Compile Include="Dto\Person.cs" />
-    <Compile Include="Dto\PersonelToGoals.cs" />
-    <Compile Include="Dto\PersonelToProjects.cs" />
     <Compile Include="Dto\Project.cs" />
-    <Compile Include="Interfaces\IDatabaseService.cs" />
-    <Compile Include="Interfaces\IDataAccessService.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Context\WinTaskContext.cs" />
-    <Compile Include="Dao\BaseRepository.cs" />
+    <Compile Include="Dao\PersonelRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

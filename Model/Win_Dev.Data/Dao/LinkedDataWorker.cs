@@ -5,20 +5,19 @@ using System.Linq;
 
 namespace Win_Dev.Data
 {
+    
     /// <summary>
     /// Contains navigation properties data work-logic
     /// </summary>
     public partial class LinkedDataWorker
     {
-        private WinTaskContext _context;
-
         private bool _disposed = false;
 
-        public LinkedDataWorker(WinTaskContext context)
+        public LinkedDataWorker()
         {
-            this._context = context;
+        
         }
-
+        /*
         public void AddPersonToProject(Guid PersonGUID, Guid ProjectGUID)
         {
             var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectGUID)).FirstOrDefault<Project>();
@@ -221,9 +220,9 @@ namespace Win_Dev.Data
             {
                 item.PersonelWith.Remove(person);
             }
-
+        
         }
-
+*/
     }
 
 }

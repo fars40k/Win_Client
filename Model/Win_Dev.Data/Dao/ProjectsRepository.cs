@@ -1,34 +1,47 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Win_Dev.Data.Interfaces;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Win_Dev.Data
 {
-    class BaseRepository<TEntity> : IRepository<TEntity>  where TEntity : class
+    public class ProjectsRepository
     {
-        private WinTaskContext _context;
-        internal DbSet<TEntity> _dbSet;
-
+        private HttpClient _client;
         private bool disposed = false;
 
-        public BaseRepository(WinTaskContext context)
+        public ProjectsRepository()
         {
-            this._context = context;
-            this._dbSet = context.Set<TEntity>();
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", NetworkClient.Token);
         }
 
-        public virtual TEntity FindByID(Guid id)
+        public virtual Project FindByID(Guid id)
         {
-            return _dbSet.Find(id);
+            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Projects/{id}").Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            var project = JsonConvert.DeserializeObject<Project>(result);
+
+            if (project != null) return project;
+            return null;
         }
 
-        public IEnumerable<TEntity> FindAll()
+        public IEnumerable<Project> FindAll()
         {
-            return _dbSet.AsNoTracking().ToList();
-        }
+            IEnumerable<Project> list = new List<Project>();
 
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", NetworkClient.Token);
+            var response = _client.GetAsync(NetworkClient.ServerPath + "/api/Projects").Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            var valueSet = JsonConvert.DeserializeObject<List<Project>>(result);
+            list = valueSet.ToList();
+
+            return list;
+        }
+        /*
         public virtual void Insert(TEntity entity)
         {         
             _dbSet.Add(entity);
@@ -66,6 +79,7 @@ namespace Win_Dev.Data
             GC.SuppressFinalize(this);
         }
 
+        */
         protected virtual void Dispose(bool disposing)
         {
             if (disposed) return;
@@ -76,7 +90,8 @@ namespace Win_Dev.Data
             disposed = true;
         }
 
-        ~BaseRepository()
+
+        ~ProjectsRepository()
         {
             Dispose(false);
         }

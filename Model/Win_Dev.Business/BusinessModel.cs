@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using Win_Dev.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace Win_Dev.Business
 {
@@ -10,22 +13,16 @@ namespace Win_Dev.Business
     /// </summary>
     public partial class BusinessModel
     {
-        public static DataAccessObject DataAccessObject { get; private set; } 
 
-        public BusinessModel()
+        private DataAccessObject _dataAccessObject;
+
+        public BusinessModel(DataAccessObject dataAccessObject)
         {
-           
-        }
-
-        public void BusinessModelInit(DatabaseWorker newDatabaseWorker)
-        {
-
-            if (DataAccessObject == null) DataAccessObject = newDatabaseWorker.DataAccessObject;
-
+            _dataAccessObject = dataAccessObject;
         }
 
         #region Project_related
-
+        /*
         public void CreateProject(Action<BusinessProject,Exception> callback)
         {
             Exception error = null;
@@ -48,9 +45,9 @@ namespace Win_Dev.Business
                 project.Percentage = 0;
                 project.StatusKey = 0;
 
-                DataAccessObject.Projects.Insert(project.Project);
+                //DataAccessObject.Projects.Insert(project.Project);
 
-                DataAccessObject.Projects.SaveChanges();
+                //DataAccessObject.Projects.SaveChanges();
 
                 error = null;
             }
@@ -61,34 +58,35 @@ namespace Win_Dev.Business
 
             callback.Invoke(project,error);
         }
-
+        */
         public void GetProjectsList(Action<List<BusinessProject>, Exception> callback)
         {
-           /* List<BusinessProject> businessProjects = new List<BusinessProject>();
 
-            Exception error = null;
+            List<BusinessProject> businessProjects = new List<BusinessProject>();
 
-            try
-            {
-                List<Project> fromDataList = DataAccessObject.Projects.FindAll().ToList<Project>();
+             Exception error = null;
 
-                foreach (Project item in fromDataList)
-                {
-                    item.Name = item.Name.TrimEnd(' ');
-                    item.Description = item.Description.TrimEnd(' ');
+             try
+             {
+                 List<Project> fromDataList = _dataAccessObject.Projects.FindAll().ToList<Project>();
 
-                    businessProjects.Add(new BusinessProject(item));
-                }
-                error = null;
-            }
-            catch (Exception ex)
-            {
-                error = ex;
-            }
+                 foreach (Project item in fromDataList)
+                 {
+                     item.Name = item.Name.TrimEnd(' ');
+                     item.Description = item.Description.TrimEnd(' ');
 
-            callback.Invoke(businessProjects, error);*/
+                     businessProjects.Add(new BusinessProject(item));
+                 }
+                 error = null;
+             }
+             catch (Exception ex)
+             {
+                 error = ex;
+             }
+
+             callback.Invoke(businessProjects, error);
         }
-
+        /*
         public void UpdateProject(BusinessProject projectFromUI,Action<Exception> callback)
         {
             Project found = DataAccessObject.Projects.FindByID(projectFromUI.ProjectID);
@@ -158,11 +156,11 @@ namespace Win_Dev.Business
 
             callback.Invoke(foundProject,error);
         }
-
+        */
         #endregion
 
         #region Personel_related
-
+        /*
         public void CreatePerson(Action<BusinessPerson, Exception> callback)
         {
             Exception error = null;
@@ -194,17 +192,17 @@ namespace Win_Dev.Business
 
             callback.Invoke(businessPerson, error);
         }
-
+        */
         public void GetPersonelList(Action<List<BusinessPerson>, Exception> callback)
         {
-            /*Exception error = null;
+            Exception error = null;
 
             List<BusinessPerson> businessPersonel = new List<BusinessPerson>();
 
             try
             {
 
-                List<Person> fromDataList = DataAccessObject.Personel.FindAll().ToList<Person>();       
+                List<Person> fromDataList = _dataAccessObject.Personel.FindAll().ToList<Person>();       
         
                 foreach (Person item in fromDataList)
                 {
@@ -223,9 +221,9 @@ namespace Win_Dev.Business
                 error = ex;
             }
 
-            callback.Invoke(businessPersonel, error);*/
+            callback.Invoke(businessPersonel, error);
         }
-
+        /*
         public void UpdatePersonel(IEnumerable<BusinessPerson> UIList, Action<Exception> callback)
         {
             Exception error = null;
@@ -558,7 +556,8 @@ namespace Win_Dev.Business
             callback.Invoke(error);
         }
 
-
+        */
+        #endregion
     }
 
 }

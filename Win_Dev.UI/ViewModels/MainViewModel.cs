@@ -13,6 +13,7 @@ using System;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Command;
 using Ninject;
+using Win_Dev.Data;
 
 namespace Win_Dev.UI.ViewModels
 {
@@ -114,12 +115,7 @@ namespace Win_Dev.UI.ViewModels
             _kernel= kernel;
             _registryWorker = registryWorker;
             _client = ViewModelLocator.client;
-            _applicationCultures = cultures;
-
-            LogOutCommand = new RelayCommand(() =>
-            {
-                _client.LogOut();
-            });
+            _applicationCultures = cultures;           
 
             MessengerInstance.Register<NotificationMessage<string>>(this, BeingNotifed);
 
@@ -149,7 +145,7 @@ namespace Win_Dev.UI.ViewModels
             DatabaseUpdating = Visibility.Hidden;
 
             _client.Initialise();
-            ClientObject _clientObject = _client as ClientObject;
+            NetworkClient _clientObject = _client as NetworkClient;
 
             if (_clientObject.State.IsServerFound == false)
             {
@@ -160,6 +156,11 @@ namespace Win_Dev.UI.ViewModels
             {
                 UserHelpString = String.Empty;
 
+                LogOutCommand = new RelayCommand(() =>
+                {
+                    _client.LogOut();
+                });
+
                 TabControlArea = _kernel.Get<LoginView>();
 
             }
@@ -169,31 +170,37 @@ namespace Win_Dev.UI.ViewModels
 
         private void _clientObject_applicationStateChanged(ApplicationState obj)
         {
-            ClientObject _clientObject = _client as ClientObject;
+            NetworkClient _clientObject = _client as NetworkClient;
 
             UserHelpString = _clientObject.State.ToString();
 
+            if (_clientObject.State.LoginAttemptFailed == true)
+            {
+
+                UserHelpString = (string)Application.Current.Resources["Attempt_failed"] ?? "missing";
+
+            }
+            else 
+            
             if (_clientObject.State.DoesUserLoggedIn == false)
+
             {
-
-                if (TabControlArea is LoginView)
-                {                    
-
-                } else
+                if (!(TabControlArea is LoginView))
                 {
+
                     TabControlArea = _kernel.Get<LoginView>();
+
                 }
 
-            } else
+            }
+            else
             {
-                if (TabControlArea is TableView)
+                if (!(TabControlArea is TableView))
                 {
 
-                }
-                else
-                {
                     TabControlArea = _kernel.Get<TableView>();
-                }               
+
+                }
 
             }
         }

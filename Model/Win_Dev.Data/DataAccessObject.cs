@@ -1,4 +1,4 @@
-﻿using Win_Dev.Data.Interfaces;
+﻿
 
 namespace Win_Dev.Data
 {
@@ -7,42 +7,20 @@ namespace Win_Dev.Data
     /// </summary>
     public class DataAccessObject : IDataAccessService
     {
-        public IRepository<Person> Personel;
-        public IRepository<Project> Projects;
-        public IRepository<Goal> Goals;
+        public NetworkClient Client;
+        public ProjectsRepository Projects;
+        public PersonelRepository Personel;
+        public GoalsRepository Goals;
         public LinkedDataWorker LinkedData;
-
-        public DataAccessObject()
+        public DataAccessObject(NetworkClient client)
         {
-            
-        }     
+            Client = client;
 
-        public void UpdateEntityModel()
-        {
-            using (WinTaskContext wtContext = new WinTaskContext())
-            {
-                Personel.FindAll();
-                var personelToProjects = wtContext.Personel.Include("ProjectsWith");
-                var personelToGoals = wtContext.Personel.Include("GoalsWith");
-                var goalsToProjects = wtContext.Goals.Include("ProjectsWith");
-            }
-        }
+            Projects = new ProjectsRepository();
+            Personel = new PersonelRepository();
+            Goals = new GoalsRepository();
 
-        public void SaveChanges()
-        {
-            Personel.SaveChanges();
 
-            UpdateContextInRepositories();
-        }
-
-        public void UpdateContextInRepositories()
-        {
-            WinTaskContext wtContext = new WinTaskContext();
-
-            Personel = new BaseRepository<Person>(wtContext);
-            Projects = new BaseRepository<Project>(wtContext);
-            Goals = new BaseRepository<Goal>(wtContext);
-            LinkedData = new LinkedDataWorker(wtContext);
 
         }
 

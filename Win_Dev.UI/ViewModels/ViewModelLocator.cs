@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using Win_Dev.Business;
 using Ninject;
+using Win_Dev.Data;
 
 namespace Win_Dev.UI.ViewModels
 {
@@ -21,14 +22,14 @@ namespace Win_Dev.UI.ViewModels
             if (ViewModelBase.IsInDesignModeStatic)
             {
 
-                kernel.Bind<INetworkClient>().To<ClientObject>().InSingletonScope();
+                kernel.Bind<INetworkClient>().To<NetworkClient>().InSingletonScope();
 
             }
 
             else
             {
 
-                kernel.Bind<INetworkClient>().To<ClientObject>().InSingletonScope();
+                kernel.Bind<INetworkClient>().To<NetworkClient>().InSingletonScope();
 
             }
 

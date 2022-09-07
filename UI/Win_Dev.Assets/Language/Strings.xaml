@@ -51,5 +51,6 @@
     <sys:String x:Key="Password">Password</sys:String>
     <sys:String x:Key="Sign_in">ㅤSign inㅤ</sys:String>
     <sys:String x:Key="Log_out">ㅤLog outㅤ</sys:String>
+    <sys:String x:Key="Attempt_failed">Wrong login or password credentials</sys:String>
 
 </ResourceDictionary>
