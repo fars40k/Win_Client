@@ -91,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="BusinessModel - Copy.cs" />
     <Compile Include="BusinessModel.cs" />
     <Compile Include="BusinessObjects\BusinessGoal.cs" />
     <Compile Include="BusinessObjects\BusinessPerson.cs" />

@@ -2,5 +2,9 @@
 {
     public interface INetworkClient
     {
+        void Initialise();      
+        void LogIn(string login, string password);
+
+        void LogOut();
     }
 }

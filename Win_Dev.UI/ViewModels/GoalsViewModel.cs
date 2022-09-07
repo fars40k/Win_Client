@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,7 @@ namespace Win_Dev.UI.ViewModels
 {
     class GoalsViewModel : ViewModelBase
     {
-        public BusinessModel Model = SimpleIoc.Default.GetInstance<BusinessModel>();
+        public BusinessModel Model = ViewModelLocator.kernel.Get<BusinessModel>();
 
         public BusinessProject Project;
 

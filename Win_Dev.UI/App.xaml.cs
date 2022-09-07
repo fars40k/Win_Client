@@ -5,6 +5,7 @@ using Win_Dev.UI.ViewModels;
 using Win_Dev.Business;
 using Win_Dev.UI.Views;
 using Ninject;
+using Win_Dev.Data;
 
 namespace Win_Dev.UI
 {
