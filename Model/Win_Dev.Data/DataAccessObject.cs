@@ -14,13 +14,22 @@ namespace Win_Dev.Data
         public LinkedDataWorker LinkedData;
         public DataAccessObject(NetworkClient client)
         {
+
             Client = client;
 
             Projects = new ProjectsRepository();
             Personel = new PersonelRepository();
             Goals = new GoalsRepository();
+            LinkedData = new LinkedDataWorker();
 
+            Client.TokenChanged += (s) =>
+            {
+                Projects = new ProjectsRepository();
+                Personel = new PersonelRepository();
+                Goals = new GoalsRepository();
+                LinkedData = new LinkedDataWorker();
 
+            };
 
         }
 

@@ -165,7 +165,7 @@ namespace Win_Dev.UI.ViewModels
 
             }
 
-            _clientObject.applicationStateChanged += _clientObject_applicationStateChanged;
+            _clientObject.ApplicationStateChanged += _clientObject_applicationStateChanged;
         }
 
         private void _clientObject_applicationStateChanged(ApplicationState obj)

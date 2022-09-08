@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
+using System.Web.Script.Serialization;
 
 namespace Win_Dev.Data
 {
@@ -33,7 +37,6 @@ namespace Win_Dev.Data
         {
             IEnumerable<Person> list = new List<Person>();
 
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", NetworkClient.Token);
             var response = _client.GetAsync(NetworkClient.ServerPath + "/api/Personel").Result;
             var result = response.Content.ReadAsStringAsync().Result;
             var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
@@ -41,36 +44,41 @@ namespace Win_Dev.Data
 
             return list;
         }
-        /*
-        public virtual void Insert(TEntity entity)
-        {         
-            _dbSet.Add(entity);
-            _context.SaveChanges();
-        }
+        
+        public virtual void Insert(Person person)
+        {
+            string json = new JavaScriptSerializer().Serialize(person);
 
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(json);
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+        }
+        
         public virtual void Delete(Guid id)
         {
-            TEntity entityToDelete = _dbSet.Find(id);
-            _dbSet.Remove(entityToDelete);
-            _context.SaveChanges();
-        }
+            
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel/" + $"?id={id}");
+            request.Method = "DELETE";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-        public void Delete(TEntity entityToDelete)
-        {
-            _context.Entry(entityToDelete).State = EntityState.Deleted;
-            _dbSet.Remove(entityToDelete);
-            _context.SaveChanges();
+            var response = (HttpWebResponse)request.GetResponse();
         }
-
-        public virtual void Update(TEntity entityToUpdate)
+        
+        public virtual void Update(Person person)
         {
-            _context.Entry(entityToUpdate).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
+            Insert(person);
         }
 
         public void Dispose()
@@ -79,7 +87,6 @@ namespace Win_Dev.Data
             GC.SuppressFinalize(this);
         }
 
-        */
         protected virtual void Dispose(bool disposing)
         {
             if (disposed) return;

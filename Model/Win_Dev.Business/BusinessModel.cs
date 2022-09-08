@@ -77,7 +77,32 @@ namespace Win_Dev.Business
         
         public void CreatePerson(Action<BusinessPerson, Exception> callback)
         {
-          
+            Exception error = null;
+
+            BusinessPerson businessPerson = new BusinessPerson();
+
+            try
+            {
+                businessPerson.Person = new Person();
+
+                Random rnd = new Random();
+                businessPerson.PersonID = Guid.NewGuid();
+                businessPerson.FirstName = "First" + rnd.Next(0, 100).ToString();
+                businessPerson.SurName = "Sur" + rnd.Next(0, 100).ToString();
+                businessPerson.LastName = "Last" + rnd.Next(0, 100).ToString();
+                businessPerson.Division = "div" + rnd.Next(0, 100).ToString();
+                businessPerson.Occupation = "occ" + rnd.Next(0, 100).ToString();
+
+                _dataAccessObject.Personel.Insert(businessPerson.Person);
+
+                error = null;
+            }
+            catch (Exception ex)
+            {
+                error = ex;
+            }
+
+            callback.Invoke(businessPerson, error);
         }
         
         public void GetPersonelList(Action<List<BusinessPerson>, Exception> callback)
@@ -118,7 +143,18 @@ namespace Win_Dev.Business
 
         public void DeletePerson(BusinessPerson forDelete,Action<Exception> callback)
         {
-            
+            Exception error = null;
+
+            try
+            {
+                _dataAccessObject.Personel.Delete(forDelete.PersonID);
+            }
+            catch (Exception ex)
+            {
+                error = ex;
+            }
+
+            callback.Invoke(error);
         }
 
         public void GetPersonelForProject(Guid projectGUID, Action<List<BusinessPerson>, Exception> callback)

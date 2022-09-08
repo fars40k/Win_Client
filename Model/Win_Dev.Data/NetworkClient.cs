@@ -25,7 +25,8 @@ namespace Win_Dev.Data
             }
         }
 
-        public Action<ApplicationState> applicationStateChanged;
+        public Action<string> TokenChanged;
+        public Action<ApplicationState> ApplicationStateChanged;
 
         public NetworkClient()
         {
@@ -87,7 +88,8 @@ namespace Win_Dev.Data
                 }
             }
 
-            if (applicationStateChanged != null) applicationStateChanged.Invoke(_state);
+            if (ApplicationStateChanged != null) ApplicationStateChanged.Invoke(_state);
+            if (TokenChanged != null) TokenChanged.Invoke(Token);
 
             State.LoginAttemptFailed = false;
         }
@@ -95,7 +97,7 @@ namespace Win_Dev.Data
         public void LogOut()
         {
             State.DoesUserLoggedIn = false;
-            if (applicationStateChanged != null) applicationStateChanged.Invoke(_state);
+            if (ApplicationStateChanged != null) ApplicationStateChanged.Invoke(_state);
 
         }
 
