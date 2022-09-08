@@ -81,6 +81,31 @@ namespace Win_Dev.Data
             Insert(person);
         }
 
+        public IEnumerable<Person> FindForProject(Guid id)
+        {
+            IEnumerable<Person> list = new List<Person>();
+
+            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Personel/ForProject/{id}").Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
+            list = valueSet.ToList();
+
+            return list;
+        }
+
+        public IEnumerable<Person> FindForGoals(Guid id)
+        {
+            IEnumerable<Person> list = new List<Person>();
+
+            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Personel/ForGoal/{id}").Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+            var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
+            list = valueSet.ToList();
+
+            return list;
+        }
+    
+
         public void Dispose()
         {
             Dispose(true);
