@@ -22,7 +22,7 @@ namespace Win_Dev.Business
         }
 
         #region Project_related
-        /*
+        
         public void CreateProject(Action<BusinessProject,Exception> callback)
         {
             Exception error = null;
@@ -58,7 +58,7 @@ namespace Win_Dev.Business
 
             callback.Invoke(project,error);
         }
-        */
+        
         public void GetProjectsList(Action<List<BusinessProject>, Exception> callback)
         {
 
@@ -500,7 +500,7 @@ namespace Win_Dev.Business
             try
             {
                 DataAccessObject.LinkedData.RemovePersonFromProject(personGUID, projectGUID);
-                List<Goal> goals = DataAccessObject.Goals.FindAll().ToList();
+                List<Goal> goals = _dataAccessObject.Projects.
 
                 foreach (Goal item in goals)
                 {

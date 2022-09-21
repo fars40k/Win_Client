@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -21,35 +23,26 @@ namespace Win_Dev.Data
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", NetworkClient.Token);
         }
-        /*
+        
         public void AddPersonToProject(Guid PersonGUID, Guid ProjectGUID)
         {
-            var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectGUID)).FirstOrDefault<Project>();
-            var person = _context.Personel.Where(r => r.PersonID.Equals(PersonGUID)).FirstOrDefault<Person>();
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel/Assign/" + $"{PersonGUID}/{ProjectGUID}");
+            request.Method = "GET";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-            Project projectDao = project;
-            Person personDao = person;
-
-            if ((projectDao != null) && (personDao != null) && (!projectDao.PersonelWith.Contains<Person>(personDao)))
-            {
-                projectDao.PersonelWith.Add(personDao);
-            }
+            var response = (HttpWebResponse)request.GetResponse();
         }
 
         public void RemovePersonFromProject(Guid PersonGUID, Guid ProjectGUID)
         {
-            var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectGUID)).FirstOrDefault<Project>();
-            var person = _context.Personel.Where(r => r.PersonID.Equals(PersonGUID)).FirstOrDefault<Person>();
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel/Unassign/" + $"{PersonGUID}/{ProjectGUID}");
+            request.Method = "GET";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-            Project projectDao = project;
-            Person personDao = person;
-
-            if ((projectDao != null) && (personDao != null) && (projectDao.PersonelWith.Contains<Person>(personDao)))
-            {
-                projectDao.PersonelWith.Remove(personDao);
-            }
+            var response = (HttpWebResponse)request.GetResponse();
         }
-
+        
+        /*
         public void AddGoalToProject(Guid GoalGUID, Guid ProjectGUID)
         {
             var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectGUID)).FirstOrDefault<Project>();
@@ -108,26 +101,7 @@ namespace Win_Dev.Data
             }
         }
 
-        public IEnumerable<Goal> FindGoalsForProject(Guid ProjectID)
-        {
-            var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectID)).Include("GoalsIn").FirstOrDefault<Project>();
-
-            List<Goal> goals = new List<Goal>();
-
-            if (project != null)
-            {
-                foreach (Goal item in project.GoalsIn)
-                {
-                    goals.Add(item);
-                }
-
-                return goals;
-
-            } else
-            {
-                return null;
-            }
-        }
+       
 
         public IEnumerable<Person> FindAllPersonelWithLinks()
         {

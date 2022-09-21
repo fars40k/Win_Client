@@ -158,7 +158,8 @@ namespace Win_Dev.UI.ViewModels
 
                 LogOutCommand = new RelayCommand(() =>
                 {
-                    _client.LogOut();
+                    System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                    Application.Current.Shutdown();
                 });
 
                 TabControlArea = _kernel.Get<LoginView>();

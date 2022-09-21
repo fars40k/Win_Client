@@ -41,7 +41,7 @@ namespace Win_Dev.Data
             var result = response.Content.ReadAsStringAsync().Result;
             var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
             list = valueSet.ToList();
-
+            
             return list;
         }
         
@@ -84,12 +84,13 @@ namespace Win_Dev.Data
         public IEnumerable<Person> FindForProject(Guid id)
         {
             IEnumerable<Person> list = new List<Person>();
+            var url = NetworkClient.ServerPath + $"/api/Personel/ForProject/{id.ToString()}";
 
-            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Personel/ForProject/{id}").Result;
+            var response = _client.GetAsync(url).Result;
             var result = response.Content.ReadAsStringAsync().Result;
             var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
             list = valueSet.ToList();
-
+            
             return list;
         }
 
