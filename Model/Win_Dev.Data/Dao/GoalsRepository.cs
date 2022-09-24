@@ -85,7 +85,7 @@ namespace Win_Dev.Data
         {
             IEnumerable<Goal> list = new List<Goal>();
 
-            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Personel/FindGoalsFor/{id}").Result;
+            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Goals/ForProject/{id}").Result;
             var result = response.Content.ReadAsStringAsync().Result;
 
             if (result != "null")

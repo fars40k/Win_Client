@@ -126,10 +126,11 @@ namespace Win_Dev.UI.ViewModels
                 if (SelectedGoal != null)
                 {          
                     string subtraction = SelectedGoal.ExpireDate.Subtract(SelectedGoal.CreationDate).TotalDays.ToString();
+                    int odds = (int)Math.Round(Double.Parse(subtraction));
 
                     // If Expire date past start date
 
-                    if (Int32.Parse(subtraction) < 0)
+                    if (odds < 0)
                     {
                         obj += Application.Current.Resources["Wrong_data"];
                     }
@@ -140,7 +141,7 @@ namespace Win_Dev.UI.ViewModels
 
                         // Comparison with the today date
 
-                        if (Int32.Parse(subtraction) >= 0)
+                        if (odds >= 0)
                         {
 
                             obj += Application.Current.Resources["To_completion"] + " " +
@@ -331,7 +332,7 @@ namespace Win_Dev.UI.ViewModels
 
             SelectionChangedCommand = new RelayCommand<BusinessGoal>((goal) =>
             {
-                SelectedGoal = goal;
+                if (goal != null) SelectedGoal = goal;
                 if (SelectedGoal != null) UpdatePersonel(SelectedGoal.GoalID);             
             });
 

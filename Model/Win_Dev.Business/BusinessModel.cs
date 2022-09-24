@@ -363,7 +363,7 @@ namespace Win_Dev.Business
 
         public void GetGoalsForProject(Guid ProjectGUID, Action<List<BusinessGoal>, Exception> callback)
         {
-
+            // fix it
             List<BusinessGoal> businessGoals = new List<BusinessGoal>();
 
             Exception error = null;

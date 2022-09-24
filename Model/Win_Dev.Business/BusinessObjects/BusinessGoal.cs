@@ -81,15 +81,6 @@ namespace Win_Dev.Business
             }
         }
 
-        public int PersonelOnGoal
-        {
-            get => Goal.PersonelWith.Count;
-            set
-            {
-
-            }
-        }
-
         public string CreationDateShort
         {
             get => Goal.CreationDate.ToShortDateString();
