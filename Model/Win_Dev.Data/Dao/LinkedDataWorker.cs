@@ -42,128 +42,41 @@ namespace Win_Dev.Data
             var response = (HttpWebResponse)request.GetResponse();
         }
         
-        /*
         public void AddGoalToProject(Guid GoalGUID, Guid ProjectGUID)
         {
-            var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectGUID)).FirstOrDefault<Project>();
-            var goal = _context.Goals.Where(r => r.GoalID.Equals(GoalGUID)).FirstOrDefault<Goal>();
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Projects/AddTaskTo/" + $"{ProjectGUID}/{GoalGUID}");
+            request.Method = "GET";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-            Project projectDao = project;
-            Goal goalDao = goal;
-
-            if ((projectDao != null) && (goalDao != null) && (!projectDao.GoalsIn.Contains<Goal>(goalDao)))
-            {
-                goalDao.ProjectsWith.Add(projectDao);
-                projectDao.GoalsIn.Add(goalDao);
-            }
+            var response = (HttpWebResponse)request.GetResponse();
         }
 
         public void RemoveGoalFromProject(Guid GoalGUID, Guid ProjectGUID)
         {
-            var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectGUID)).FirstOrDefault<Project>();
-            var goal = _context.Goals.Where(r => r.GoalID.Equals(GoalGUID)).FirstOrDefault<Goal>();
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Projects/RemoveTaskFrom/" + $"{ProjectGUID}/{GoalGUID}");
+            request.Method = "GET";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-            Project projectDao = project;
-            Goal goalDao = goal;
-
-            if ((projectDao != null) && (goalDao != null) && (projectDao.GoalsIn.Contains<Goal>(goalDao)))
-            {
-                goalDao.ProjectsWith.Remove(projectDao);
-                projectDao.GoalsIn.Remove(goalDao);
-            }
+            var response = (HttpWebResponse)request.GetResponse();
         }
 
         public void AddPersonToGoal(Guid PersonGUID, Guid GoalGUID)
         {
-            var goal = _context.Goals.Where(p => p.GoalID.Equals(GoalGUID)).FirstOrDefault<Goal>();
-            var person = _context.Personel.Where(r => r.PersonID.Equals(PersonGUID)).FirstOrDefault<Person>();
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Projects/Appoint/" + $"{PersonGUID}/{GoalGUID}");
+            request.Method = "GET";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-            Goal goalDao = goal;
-            Person personDao = person;
-
-            if ((goalDao != null) && (personDao != null) && (!goalDao.PersonelWith.Contains<Person>(personDao)))
-            {
-                goalDao.PersonelWith.Add(personDao);
-            }
+            var response = (HttpWebResponse)request.GetResponse();
         }
 
         public void RemovePersonFromGoal(Guid PersonGUID, Guid GoalGUID)
         {
-            var goal = _context.Goals.Where(p => p.GoalID.Equals(GoalGUID)).FirstOrDefault<Goal>();
-            var person = _context.Personel.Where(r => r.PersonID.Equals(PersonGUID)).FirstOrDefault<Person>();
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Projects/Dismiss/" + $"{PersonGUID}/{GoalGUID}");
+            request.Method = "GET";
+            request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
-            Goal goalDao = goal;
-            Person personDao = person;
-
-            if ((goalDao != null) && (personDao != null) && (goalDao.PersonelWith.Contains<Person>(personDao)))
-            {
-                goalDao.PersonelWith.Remove(personDao);
-            }
-        }
-
-       
-
-        public IEnumerable<Person> FindAllPersonelWithLinks()
-        {
-            return _context.Personel.Include(p => p.GoalsWith.Select(w => w.ProjectsWith));
-        }
-
-        public IEnumerable<Person> FindPersonelForProject(Guid ProjectID)
-        {
-            var project = _context.Projects.Where(p => p.ProjectID.Equals(ProjectID)).Include("PersonelWith").FirstOrDefault();
-
-            List<Person> personel = new List<Person>();
-
-            if (project != null)
-            {
-                foreach (Person item in project.PersonelWith)
-                {
-                    personel.Add(item);
-                }
-
-                return personel;
-
-            } else
-            {
-                return null;
-            }
-        }
-
-        public IEnumerable<Person> FindPersonelForGoal(Guid GoalID)
-        {
-            var goal = _context.Goals.Where(p => p.GoalID.Equals(GoalID)).Include("PersonelWith").FirstOrDefault<Goal>();
-
-            List<Person> personel = new List<Person>();
-
-            foreach (Person item in goal.PersonelWith)
-            {
-                personel.Add(item);
-            }
-
-            return personel;
-        }
-
-        public Goal FindGoalwithProject(Guid GoalID)
-        {
-            Goal goal = _context.Goals.Where(g => g.GoalID == GoalID).Include("ProjectsWith").FirstOrDefault();
-
-            return goal;
-        }
-
-        public EntityState CheckState(dynamic entity)
-        {
-            return _context.Entry(entity).State;
-        }
-
-        public void MakeModifiedStatus(dynamic entity)
-        {        
-            _context.Entry(entity).State = EntityState.Modified;
-        }
-
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
+            var response = (HttpWebResponse)request.GetResponse();
+        }       
 
         public void Dispose()
         {
@@ -185,22 +98,7 @@ namespace Win_Dev.Data
         {
             Dispose(false);
         }
-
-        public void ClearLinksForPerson(Guid personID)
-        {
-            var person = _context.Personel.Where(r => r.PersonID.Equals(personID)).FirstOrDefault<Person>();
-
-            foreach(Project item in _context.Projects)
-            {
-                item.PersonelWith.Remove(person);
-            }
-            foreach (Goal item in _context.Goals)
-            {
-                item.PersonelWith.Remove(person);
-            }
-        
-        }
-*/
+     
     }
 
 }

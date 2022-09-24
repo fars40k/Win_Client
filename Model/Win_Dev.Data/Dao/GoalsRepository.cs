@@ -81,6 +81,22 @@ namespace Win_Dev.Data
             Insert(goal);
         }
 
+        public IEnumerable<Goal> FindGoalsFor(Guid id)
+        {
+            IEnumerable<Goal> list = new List<Goal>();
+
+            var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Personel/FindGoalsFor/{id}").Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+
+            if (result != "null")
+            {
+                var valueSet = JsonConvert.DeserializeObject<List<Goal>>(result);
+                list = valueSet.ToList();
+            }
+
+            return list;
+        }
+
         public void Dispose()
         {
             Dispose(true);

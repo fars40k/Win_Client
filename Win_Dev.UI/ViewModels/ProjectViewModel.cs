@@ -335,7 +335,7 @@ namespace Win_Dev.UI.ViewModels
                 Model.GetPersonelForProject(Project.ProjectID, ((list, error) =>
                 {
 
-                    if ((error != null) && (list.Count == 0))
+                    if (error != null)
                     {
                         MessengerInstance.Send<NotificationMessage<string>>(new NotificationMessage<string>(
                             (string)Application.Current.Resources["Error_database_request"] + "GetPersonelForProject",

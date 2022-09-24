@@ -88,9 +88,32 @@ namespace Win_Dev.Data
 
             var response = _client.GetAsync(url).Result;
             var result = response.Content.ReadAsStringAsync().Result;
-            var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
-            list = valueSet.ToList();
-            
+
+            if (result != "null")
+            {
+
+                var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
+                list = valueSet.ToList();
+
+            }
+            return list;
+        }
+
+        public IEnumerable<Person> FindForGoal(Guid id)
+        {
+            IEnumerable<Person> list = new List<Person>();
+            var url = NetworkClient.ServerPath + $"/api/Personel/ForGoal/{id.ToString()}";
+
+            var response = _client.GetAsync(url).Result;
+            var result = response.Content.ReadAsStringAsync().Result;
+
+            if (result != "null")
+            {
+
+                var valueSet = JsonConvert.DeserializeObject<List<Person>>(result);
+                list = valueSet.ToList();
+
+            }
             return list;
         }
 
