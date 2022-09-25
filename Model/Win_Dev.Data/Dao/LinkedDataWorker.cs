@@ -62,7 +62,7 @@ namespace Win_Dev.Data
 
         public void AddPersonToGoal(Guid PersonGUID, Guid GoalGUID)
         {
-            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Projects/Appoint/" + $"{PersonGUID}/{GoalGUID}");
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel/Appoint/" + $"{PersonGUID}/{GoalGUID}");
             request.Method = "GET";
             request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 
@@ -71,7 +71,7 @@ namespace Win_Dev.Data
 
         public void RemovePersonFromGoal(Guid PersonGUID, Guid GoalGUID)
         {
-            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Projects/Dismiss/" + $"{PersonGUID}/{GoalGUID}");
+            var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel/Dismiss/" + $"{PersonGUID}/{GoalGUID}");
             request.Method = "GET";
             request.Headers.Add("Authorization", "Bearer " + NetworkClient.Token);
 

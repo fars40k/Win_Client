@@ -320,10 +320,9 @@ namespace Win_Dev.Business
 
             try
             {
-                Project goalInProject = forDelete.Project.FirstOrDefault<Project>();
 
-                _dataAccessObject.LinkedData.RemoveGoalFromProject(forDelete.GoalID, goalInProject.ProjectID);
                 _dataAccessObject.Goals.Delete(forDelete.GoalID);
+
             }
             catch (Exception ex)
             {
@@ -342,7 +341,7 @@ namespace Win_Dev.Business
             try
             {
 
-                List<Person> fromDataList = _dataAccessObject.Personel.FindForProject(goalGUID).ToList<Person>();
+                List<Person> fromDataList = _dataAccessObject.Personel.FindForGoal(goalGUID).ToList<Person>();
 
                 foreach (Person item in fromDataList)
                 {
@@ -363,7 +362,7 @@ namespace Win_Dev.Business
 
         public void GetGoalsForProject(Guid ProjectGUID, Action<List<BusinessGoal>, Exception> callback)
         {
-            // fix it
+
             List<BusinessGoal> businessGoals = new List<BusinessGoal>();
 
             Exception error = null;
