@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Win_Dev.Business
 {

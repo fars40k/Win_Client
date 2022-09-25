@@ -1,14 +1,11 @@
 ﻿using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight.Ioc;
 using Win_Dev.Business;
 using System.Windows;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Controls;
 using Win_Dev.UI.Views;
-using System.Threading;
-using System.Threading.Tasks;
 using System;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Command;

@@ -1,6 +1,4 @@
-﻿
-
-namespace Win_Dev.Data
+﻿namespace Win_Dev.Data
 {
     /// <summary>
     /// Contains Repositories with basic database operations and worker for complex

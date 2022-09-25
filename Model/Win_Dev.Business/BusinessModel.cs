@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using Win_Dev.Data;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
 
 namespace Win_Dev.Business
 {
