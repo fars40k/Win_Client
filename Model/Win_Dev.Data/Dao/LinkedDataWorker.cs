@@ -20,7 +20,11 @@ namespace Win_Dev.Data
             _client = new HttpClient();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", NetworkClient.Token);
         }
-        
+        public LinkedDataWorker(HttpClient client)
+        {
+            _client = client;
+        }
+
         public void AddPersonToProject(Guid PersonGUID, Guid ProjectGUID)
         {
             var request = (HttpWebRequest)WebRequest.Create(NetworkClient.ServerPath + "/api/Personel/Assign/" + $"{PersonGUID}/{ProjectGUID}");

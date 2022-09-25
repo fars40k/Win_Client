@@ -21,6 +21,11 @@ namespace Win_Dev.Data
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", NetworkClient.Token);
         }
 
+        public GoalsRepository(HttpClient client)
+        {
+            _client = client;
+        }
+
         public virtual Goal FindByID(Guid id)
         {
             var response = _client.GetAsync(NetworkClient.ServerPath + $"/api/Goals/{id}").Result;
