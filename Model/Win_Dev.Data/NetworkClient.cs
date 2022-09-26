@@ -57,11 +57,7 @@ namespace Win_Dev.Data
 
         public void LogIn(string login, string password)
         {
-            var pairs = new List<KeyValuePair<string, string>>
-                {
-                    /*new KeyValuePair<string, string>( "username", login ),
-                    new KeyValuePair<string, string> ( "password", password )*/
-                };
+            var pairs = new List<KeyValuePair<string, string>>();
             var content = new FormUrlEncodedContent(pairs);
             
             using (var client = new HttpClient())
