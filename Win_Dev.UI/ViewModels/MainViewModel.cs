@@ -170,8 +170,6 @@ namespace Win_Dev.UI.ViewModels
         {
             NetworkClient _clientObject = _client as NetworkClient;
 
-            UserHelpString = _clientObject.State.ToString();
-
             if (_clientObject.State.LoginAttemptFailed == true)
             {
 
