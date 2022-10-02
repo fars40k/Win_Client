@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Threading;
 using Win_Dev.UI.ViewModels;
 using Win_Dev.Business;
