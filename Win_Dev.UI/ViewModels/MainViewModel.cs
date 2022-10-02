@@ -111,7 +111,7 @@ namespace Win_Dev.UI.ViewModels
         {
             _kernel= kernel;
             _registryWorker = registryWorker;
-            _client = ViewModelLocator.client;
+            _client = ViewModelLocator.Client;
             _applicationCultures = cultures;           
 
             MessengerInstance.Register<NotificationMessage<string>>(this, BeingNotifed);

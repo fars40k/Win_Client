@@ -14,7 +14,7 @@ namespace Win_Dev.UI.ViewModels
 {
     public class ProjectViewModel : ViewModelBase
     {
-        public BusinessModel Model = ViewModelLocator.kernel.Get<BusinessModel>();
+        public BusinessModel Model = ViewModelLocator.Kernel.Get<BusinessModel>();
 
         public BusinessProject Project;
 

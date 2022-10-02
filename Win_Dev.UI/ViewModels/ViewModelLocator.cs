@@ -11,34 +11,34 @@ namespace Win_Dev.UI.ViewModels
     /// </summary>    
     public class ViewModelLocator
     {
-        public static StandardKernel kernel;
-        public static INetworkClient client;
+        public static StandardKernel Kernel;
+        public static INetworkClient Client;
         static ViewModelLocator()
         {
-            kernel = new StandardKernel();
+            Kernel = new StandardKernel();
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
 
-                kernel.Bind<INetworkClient>().To<NetworkClient>().InSingletonScope();
+                Kernel.Bind<INetworkClient>().To<NetworkClient>().InSingletonScope();
 
             }
 
             else
             {
 
-                kernel.Bind<INetworkClient>().To<NetworkClient>().InSingletonScope();
+                Kernel.Bind<INetworkClient>().To<NetworkClient>().InSingletonScope();
 
             }
 
-            kernel.Bind<BusinessModel>().ToSelf().InSingletonScope();
-            kernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
-            kernel.Bind<TableViewModel>().ToSelf().InSingletonScope();
-            kernel.Bind<PersonelViewModel>().ToSelf().InSingletonScope();
-            kernel.Bind<ProjectViewModel>().ToSelf().InSingletonScope();
-            kernel.Bind<LoginViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<BusinessModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<MainViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<TableViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<PersonelViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<ProjectViewModel>().ToSelf().InSingletonScope();
+            Kernel.Bind<LoginViewModel>().ToSelf().InSingletonScope();
 
-            client = kernel.Get<INetworkClient>();
+            Client = Kernel.Get<INetworkClient>();
         }
 
 
@@ -50,7 +50,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return kernel.Get<MainViewModel>();
+                return Kernel.Get<MainViewModel>();
             }
         }
 
@@ -58,7 +58,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return kernel.Get<LoginViewModel>();
+                return Kernel.Get<LoginViewModel>();
             }
         }
 
@@ -66,7 +66,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return kernel.Get<TableViewModel>();
+                return Kernel.Get<TableViewModel>();
             }
         }
 
@@ -74,7 +74,7 @@ namespace Win_Dev.UI.ViewModels
         {
             get
             {
-                return kernel.Get<PersonelViewModel>();
+                return Kernel.Get<PersonelViewModel>();
             }
         }     
 

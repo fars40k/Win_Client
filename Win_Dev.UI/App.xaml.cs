@@ -14,10 +14,10 @@ namespace Win_Dev.UI
     /// </summary>
     public partial class App : Application
     {
-        private static IKernel kernel;
-        private RegistryWorker registryWorker;
-        private ApplicationCultures applicationCultures;
-        private INetworkClient client;
+        private static IKernel _kernel;
+        private RegistryWorker _registryWorker;
+        private ApplicationCultures _applicationCultures;
+        private INetworkClient _client;
 
         private static ViewModelLocator _viewModelLocator;
         public static ViewModelLocator ViewModelLocator
@@ -30,34 +30,34 @@ namespace Win_Dev.UI
             DispatcherHelper.Initialize();
 
             _viewModelLocator = new ViewModelLocator();
-            kernel = ViewModelLocator.kernel;
+            _kernel = ViewModelLocator.Kernel;
         }
 
         protected void App_Startup(object sender, StartupEventArgs e)
         { 
-            client = kernel.Get<INetworkClient>();
+            _client = _kernel.Get<INetworkClient>();
 
-            kernel.Bind<RegistryWorker>().ToSelf().InSingletonScope();
-            kernel.Bind<ApplicationCultures>().ToSelf().InSingletonScope();
-            kernel.Bind<MainWindow>().ToSelf().InSingletonScope(); 
+            _kernel.Bind<RegistryWorker>().ToSelf().InSingletonScope();
+            _kernel.Bind<ApplicationCultures>().ToSelf().InSingletonScope();
+            _kernel.Bind<MainWindow>().ToSelf().InSingletonScope(); 
 
-            applicationCultures = kernel.Get<ApplicationCultures>();
-            registryWorker = kernel.Get<RegistryWorker>();
+            _applicationCultures = _kernel.Get<ApplicationCultures>();
+            _registryWorker = _kernel.Get<RegistryWorker>();
 
             // Setting application localisation
 
-            registryWorker.SetAvalableCultures(applicationCultures.Cultures);
-            string storedLangSelection = registryWorker.ReadLanguageRegistryEntry();
-            applicationCultures.LocalisationDictionary = new ResourceDictionary();
-            applicationCultures.LocalisationDictionary.Source =
-            applicationCultures.MapCultureToResourceUri(storedLangSelection);
-            Application.Current.Resources.MergedDictionaries.Add(applicationCultures.LocalisationDictionary);
+            _registryWorker.SetAvalableCultures(_applicationCultures.Cultures);
+            string storedLangSelection = _registryWorker.ReadLanguageRegistryEntry();
+            _applicationCultures.LocalisationDictionary = new ResourceDictionary();
+            _applicationCultures.LocalisationDictionary.Source =
+            _applicationCultures.MapCultureToResourceUri(storedLangSelection);
+            Application.Current.Resources.MergedDictionaries.Add(_applicationCultures.LocalisationDictionary);
 
             // Creating main window
 
-            MainWindow mainWindow = kernel.Get<MainWindow>();
+            MainWindow mainWindow = _kernel.Get<MainWindow>();
             mainWindow.DataContext = ViewModelLocator.Main;
-            mainWindow.Resources.MergedDictionaries.Add(applicationCultures.LocalisationDictionary);
+            mainWindow.Resources.MergedDictionaries.Add(_applicationCultures.LocalisationDictionary);
             mainWindow.MainWindowInit();
             mainWindow.Show();
 

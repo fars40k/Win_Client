@@ -38,7 +38,7 @@ namespace Win_Dev.UI.ViewModels
             Login = "";
             Password = "";
            
-            ClientObject = ViewModelLocator.client;
+            ClientObject = ViewModelLocator.Client;
 
             SignInCommand = new RelayCommand(() =>
             {
